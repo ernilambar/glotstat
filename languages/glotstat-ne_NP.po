@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GlotStat 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/glotstat\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-08-04T04:30:31+00:00\n"
+"Language: ne_NP\n"
+"X-Generator: WP-CLI 2.13.0-alpha\n"
+"X-Domain: glotstat\n"
+
+#. Plugin Name of the plugin
+#: glotstat.php:3
+msgid "GlotStat"
+msgstr "GlotStat"
+
+#. Plugin URI of the plugin
+#: glotstat.php:4
+msgid "https://github.com/ernilambar/glotstat"
+msgstr "https://github.com/ernilambar/glotstat"
+
+#. Description of the plugin
+#: glotstat.php:5
+msgid "Displays plugin translation stats."
+msgstr "प्लगिन अनुवाद तथ्याङ्कहरू देखाउँछ।"
+
+#. Author of the plugin
+#: glotstat.php:9
+msgid "Nilambar Sharma"
+msgstr "निलाम्वर शर्मा"
+
+#. Author URI of the plugin
+#: glotstat.php:10
+msgid "https://nilambar.net"
+msgstr "https://nilambar.net"
+
+#: glotstat.php:36
+msgid "Sorry, you are not allowed to install plugins on this site."
+msgstr "माफ गर्नुहोस्, तपाईँलाई यो साइटमा प्लगिनहरू स्थापना गर्न अनुमति छैन।"
+
+#: glotstat.php:43
+msgid "Invalid request."
+msgstr "अमान्य अनुरोध।"
+
+#: glotstat.php:113
+msgid "Checking translation…"
+msgstr "अनुवाद परीक्षण गर्दै…"
+
+#: glotstat.php:114
+msgid "Translation stats unavailable."
+msgstr "अनुवाद तथ्याङ्कहरू उपलब्ध छैनन्।"
+
+#: glotstat.php:115
+msgid "Failed to load translation."
+msgstr "अनुवाद लोड गर्न असफल भयो।"
+
+#. translators: %d: waiting string count.
+#: glotstat.php:117
+#, php-format
+msgid "%d waiting"
+msgstr "%d प्रतीक्षा गर्दै"
+
+#. translators: %d: fuzzy string count.
+#: glotstat.php:119
+#, php-format
+msgid "%d fuzzy"
+msgstr "%d फजी"
+
+#. translators: %d: warning count.
+#: glotstat.php:121
+#, php-format
+msgid "%d warnings"
+msgstr "%d चेतावनीहरू"
