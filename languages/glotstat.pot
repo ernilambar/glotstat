@@ -39,40 +39,40 @@ msgstr ""
 msgid "https://nilambar.net"
 msgstr ""
 
-#: glotstat.php:36
+#: glotstat.php:37
 msgid "Sorry, you are not allowed to install plugins on this site."
 msgstr ""
 
-#: glotstat.php:43
+#: glotstat.php:44
 msgid "Invalid request."
 msgstr ""
 
-#: glotstat.php:113
+#: glotstat.php:126
 msgid "Checking translation…"
 msgstr ""
 
-#: glotstat.php:114
+#: glotstat.php:127
 msgid "Translation stats unavailable."
 msgstr ""
 
-#: glotstat.php:115
+#: glotstat.php:128
 msgid "Failed to load translation."
 msgstr ""
 
 #. translators: %d: waiting string count.
-#: glotstat.php:117
+#: glotstat.php:130
 #, php-format
 msgid "%d waiting"
 msgstr ""
 
 #. translators: %d: fuzzy string count.
-#: glotstat.php:119
+#: glotstat.php:132
 #, php-format
 msgid "%d fuzzy"
 msgstr ""
 
 #. translators: %d: warning count.
-#: glotstat.php:121
+#: glotstat.php:134
 #, php-format
 msgid "%d warnings"
 msgstr ""
