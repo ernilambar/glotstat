@@ -10,30 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_filter( 'plugin_install_description', 'langstats_inject_placeholder', 10, 2 );
-/**
- * Inject an empty placeholder into the plugin card description.
- *
- * @param string $description Plugin card description.
- * @param array  $plugin      Plugin API data.
- * @return string
- */
-function langstats_inject_placeholder( $description, $plugin ) {
-	$locale = get_user_locale();
-
-	if ( 'en_US' === $locale || empty( $plugin['slug'] ) ) {
-		return $description;
-	}
-
-	$placeholder = sprintf(
-		'<div class="plugin-translation-status" data-slug="%s" style="margin-top:10px; font-size:12px; min-height:20px;"><span class="status-label" style="color:#646970;">%s</span></div>',
-		esc_attr( $plugin['slug'] ),
-		esc_html__( 'Checking translation…', 'langstats' )
-	);
-
-	return $description . $placeholder;
-}
-
 add_action( 'wp_ajax_langstats_get_translation_status', 'langstats_ajax_get_translation_status' );
 /**
  * AJAX handler that fetches (and caches) the translation percentage for a plugin.
@@ -57,10 +33,15 @@ function langstats_ajax_get_translation_status() {
 
 	if ( ! is_array( $status ) ) {
 		$status   = array(
-			'percent' => 'N/A',
-			'url'     => '',
+			'percent'  => 'N/A',
+			'url'      => '',
+			'current'  => 0,
+			'total'    => 0,
+			'waiting'  => 0,
+			'fuzzy'    => 0,
+			'warnings' => 0,
 		);
-		$api_url  = sprintf( 'https://translate.wordpress.org/api/projects/wp-plugins/%s/stable/', $slug );
+		$api_url  = sprintf( 'https://translate.wordpress.org/api/projects/wp-plugins/%s/dev/', $slug );
 		$response = wp_remote_get( $api_url, array( 'timeout' => 4 ) );
 
 		if ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) ) {
@@ -71,7 +52,12 @@ function langstats_ajax_get_translation_status() {
 					if ( 'default' === $set['slug'] && $locale === $set['wp_locale'] ) {
 						$gp_locale          = preg_replace( '/[^a-z0-9-]/', '', $set['locale'] );
 						$status['percent']  = (int) $set['percent_translated'];
-						$status['url']      = esc_url_raw( sprintf( 'https://translate.wordpress.org/projects/wp-plugins/%s/stable/%s/default/', $slug, $gp_locale ) );
+						$status['url']      = esc_url_raw( sprintf( 'https://translate.wordpress.org/projects/wp-plugins/%s/dev/%s/default/', $slug, $gp_locale ) );
+						$status['current']  = (int) $set['current_count'];
+						$status['total']    = (int) $set['all_count'];
+						$status['waiting']  = (int) $set['waiting_count'];
+						$status['fuzzy']    = (int) $set['fuzzy_count'];
+						$status['warnings'] = (int) $set['warnings_count'];
 						break;
 					}
 				}
@@ -83,9 +69,14 @@ function langstats_ajax_get_translation_status() {
 
 	wp_send_json_success(
 		array(
-			'percent' => $status['percent'],
-			'url'     => $status['url'],
-			'locale'  => $locale,
+			'percent'  => $status['percent'],
+			'url'      => $status['url'],
+			'locale'   => $locale,
+			'current'  => $status['current'],
+			'total'    => $status['total'],
+			'waiting'  => $status['waiting'],
+			'fuzzy'    => $status['fuzzy'],
+			'warnings' => $status['warnings'],
 		)
 	);
 }
@@ -95,12 +86,23 @@ add_action( 'admin_footer-plugin-install.php', 'langstats_enqueue_script' );
  * Print the script that fetches and renders translation status on plugin cards.
  */
 function langstats_enqueue_script() {
+	if ( 'en_US' === get_user_locale() ) {
+		return;
+	}
+
 	$nonce   = wp_create_nonce( 'langstats_nonce' );
 	$strings = array(
-		/* translators: %1$s: locale code, %2$d: translation percent. */
-		'label'       => __( 'Translation (%1$s): %2$d%', 'langstats' ),
+		'checking'    => __( 'Checking translation…', 'langstats' ),
+		/* translators: %1$s: locale code, %2$d: translation percent, %3$d: translated string count, %4$d: total string count. */
+		'label'       => __( '%1$s: %2$d% (%3$d/%4$d)', 'langstats' ),
 		'unavailable' => __( 'Translation stats unavailable', 'langstats' ),
 		'error'       => __( 'Failed to load translation', 'langstats' ),
+		/* translators: %d: waiting string count. */
+		'waiting'     => __( '%d waiting', 'langstats' ),
+		/* translators: %d: fuzzy string count. */
+		'fuzzy'       => __( '%d fuzzy', 'langstats' ),
+		/* translators: %d: warning count. */
+		'warnings'    => __( '%d warnings', 'langstats' ),
 	);
 	?>
 	<script type="text/javascript">
@@ -131,13 +133,30 @@ function langstats_enqueue_script() {
 						var color   = percent >= 90 ? '#46b450' : ( percent >= 50 ? '#ffb900' : '#dc3232' );
 						var label   = langstatsStrings.label
 							.replace( '%1$s', response.data.locale )
-							.replace( '%2$d', percent );
+							.replace( '%2$d', percent )
+							.replace( '%3$d', response.data.current )
+							.replace( '%4$d', response.data.total );
 						var labelHtml = response.data.url ?
 							'<a href="' + response.data.url + '" target="_blank" rel="noopener noreferrer">' + label + '</a>' :
 							label;
+						var iconHtml = '<span class="dashicons dashicons-translation" style="font-size:14px; width:14px; height:14px; line-height:14px; vertical-align:text-bottom; margin-right:4px;"></span>';
+
+						var extras = [];
+						if ( response.data.waiting > 0 ) {
+							extras.push( langstatsStrings.waiting.replace( '%d', response.data.waiting ) );
+						}
+						if ( response.data.fuzzy > 0 ) {
+							extras.push( langstatsStrings.fuzzy.replace( '%d', response.data.fuzzy ) );
+						}
+						if ( response.data.warnings > 0 ) {
+							extras.push( langstatsStrings.warnings.replace( '%d', response.data.warnings ) );
+						}
+						var extrasHtml = extras.length ?
+							' <span style="color:#8c8f94;">(' + extras.join( ', ' ) + ')</span>' :
+							'';
 
 						$container.html(
-							'<strong>' + labelHtml + '</strong>' +
+							'<strong>' + iconHtml + labelHtml + '</strong>' + extrasHtml +
 							'<div style="background:#e0e0e0; height:5px; border-radius:3px; overflow:hidden; margin-top:3px;">' +
 								'<div style="background:' + color + '; width:' + percent + '%; height:100%;"></div>' +
 							'</div>'
@@ -161,7 +180,42 @@ function langstats_enqueue_script() {
 			} );
 		}, { rootMargin: '0px 0px 50px 0px' } );
 
+		function langstatsCreatePlaceholders() {
+			$( '.plugin-card' ).not( '.langstats-processed' ).each( function () {
+				var $card = $( this );
+				$card.addClass( 'langstats-processed' );
+
+				var slug = '';
+				var classes = ( $card.attr( 'class' ) || '' ).split( /\s+/ );
+				for ( var i = 0; i < classes.length; i++ ) {
+					if ( 0 === classes[ i ].indexOf( 'plugin-card-' ) ) {
+						slug = classes[ i ].substring( 'plugin-card-'.length );
+						break;
+					}
+				}
+
+				if ( ! slug ) {
+					return;
+				}
+
+				var $placeholder = $(
+					'<div class="plugin-translation-status" data-slug="' + slug + '" style="margin:0 0 10px; font-size:12px; min-height:20px;">' +
+						'<span class="status-label" style="color:#646970;">' + langstatsStrings.checking + '</span>' +
+					'</div>'
+				);
+
+				var $bottom = $card.find( '.plugin-card-bottom' );
+				if ( $bottom.length ) {
+					$placeholder.prependTo( $bottom );
+				} else {
+					$card.append( $placeholder );
+				}
+			} );
+		}
+
 		function langstatsObservePlaceholders() {
+			langstatsCreatePlaceholders();
+
 			$( '.plugin-translation-status:not(.is-observed)' ).each( function () {
 				$( this ).addClass( 'is-observed' );
 				langstatsObserver.observe( this );
