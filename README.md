@@ -7,6 +7,10 @@ Displays plugin translation stats.
 - WordPress 6.9+
 - PHP 7.4+
 
+## Install
+
+Download the [latest release zip](https://github.com/ernilambar/glotstat/releases/latest/download/glotstat.zip) and upload it via Plugins → Add New → Upload Plugin.
+
 ## Screenshot
 
 ![Screenshot](screenshot.png)
