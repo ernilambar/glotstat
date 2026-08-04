@@ -11,6 +11,11 @@ Displays plugin translation stats.
 
 ![Screenshot](screenshot.png)
 
+## Contributing
+
+- Run `composer format` then `composer lint` before submitting a PR; both must pass clean.
+- Follow existing code style and keep changes focused.
+
 ## License
 
 Copyright (c) 2026 Nilambar Sharma

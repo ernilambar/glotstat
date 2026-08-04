@@ -18,15 +18,6 @@ composer po           # update languages/*.po from the .pot
 composer mo           # compile languages/*.po to .mo via wp i18n make-mo
 ```
 
-## Architecture
-
-Everything lives in [glotstat.php](glotstat.php) — no autoloader, no classes, no build step:
-
-- `glotstat_enqueue_script()` — hooked to `admin_footer-plugin-install.php`. Bails if locale is `en_US`. Otherwise prints an inline `<script>` that:
-  - Uses a `MutationObserver` on `#the-list` plus an `IntersectionObserver` to lazily inject a `.plugin-translation-status` placeholder into each `.plugin-card` (slug parsed from the card's `plugin-card-{slug}` class) as it scrolls into view.
-  - AJAX-fetches the status and renders percentage, a colored progress bar, and optional waiting/fuzzy/warnings counts.
-- `glotstat_ajax_get_translation_status()` — hooked to `wp_ajax_glotstat_get_translation_status`. Nonce-checked, requires `install_plugins` capability. For a given `slug` + the current user's locale, checks a transient before calling `https://translate.wordpress.org/api/projects/wp-plugins/{slug}/dev/` and caching the parsed result.
-
 ## Quality gate
 
 **All gates MUST pass before any task is marked complete. No exceptions.**
