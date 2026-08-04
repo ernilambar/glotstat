@@ -1,8 +1,9 @@
 <?php
 /**
  * Plugin Name: GlotStat
- * Description: Shows plugin translation completion percentage on the Add Plugins screen.
- * Requires at least: 6.4
+ * Plugin URI: https://github.com/ernilambar/glotstat
+ * Description: Displays plugin translation stats.
+ * Requires at least: 6.9
  * Requires PHP: 7.4
  * Version: 1.0.0
  * Author: Nilambar Sharma
@@ -10,6 +11,7 @@
  * License: GPL-2.0-or-later
  * License URI: https://spdx.org/licenses/GPL-2.0-or-later.html
  * Text Domain: glotstat
+ * Domain Path: /languages
  *
  * @package GlotStat
  */
@@ -21,28 +23,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'GLOTSTAT_VERSION', '1.0.0' );
 
 add_action( 'wp_ajax_glotstat_get_translation_status', 'glotstat_ajax_get_translation_status' );
+
 /**
- * AJAX handler that fetches (and caches) the translation percentage for a plugin.
+ * AJAX handler that fetches (and caches) the translation stats for a plugin.
+ *
+ * @since 1.0.0
  */
 function glotstat_ajax_get_translation_status() {
 	check_ajax_referer( 'glotstat_nonce', 'nonce' );
 
 	if ( ! current_user_can( 'install_plugins' ) ) {
-		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'glotstat' ) ) );
+		wp_send_json_error( [ 'message' => __( 'Sorry, you are not allowed to install plugins on this site.', 'glotstat' ) ] );
 	}
 
 	$slug   = isset( $_POST['slug'] ) ? sanitize_key( wp_unslash( $_POST['slug'] ) ) : '';
 	$locale = get_user_locale();
 
 	if ( empty( $slug ) || 'en_US' === $locale ) {
-		wp_send_json_error( array( 'message' => __( 'Invalid request', 'glotstat' ) ) );
+		wp_send_json_error( [ 'message' => __( 'Invalid request.', 'glotstat' ) ] );
 	}
 
-	$transient_key = 'glotstat_' . GLOTSTAT_VERSION . '_' . md5( $slug . '_' . $locale );
+	$transient_key = 'glotstat_' . md5( $slug . '_' . $locale );
 	$status        = get_transient( $transient_key );
 
 	if ( ! is_array( $status ) ) {
-		$status   = array(
+		$status   = [
 			'percent'  => 'N/A',
 			'url'      => '',
 			'current'  => 0,
@@ -50,9 +55,9 @@ function glotstat_ajax_get_translation_status() {
 			'waiting'  => 0,
 			'fuzzy'    => 0,
 			'warnings' => 0,
-		);
+		];
 		$api_url  = sprintf( 'https://translate.wordpress.org/api/projects/wp-plugins/%s/dev/', $slug );
-		$response = wp_remote_get( $api_url, array( 'timeout' => 4 ) );
+		$response = wp_remote_get( $api_url, [ 'timeout' => 4 ] );
 
 		if ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) ) {
 			$data = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -78,7 +83,7 @@ function glotstat_ajax_get_translation_status() {
 	}
 
 	wp_send_json_success(
-		array(
+		[
 			'percent'  => $status['percent'],
 			'url'      => $status['url'],
 			'locale'   => $locale,
@@ -87,13 +92,16 @@ function glotstat_ajax_get_translation_status() {
 			'waiting'  => $status['waiting'],
 			'fuzzy'    => $status['fuzzy'],
 			'warnings' => $status['warnings'],
-		)
+		]
 	);
 }
 
 add_action( 'admin_footer-plugin-install.php', 'glotstat_enqueue_script' );
+
 /**
  * Print the script that fetches and renders translation status on plugin cards.
+ *
+ * @since 1.0.0
  */
 function glotstat_enqueue_script() {
 	if ( 'en_US' === get_user_locale() ) {
@@ -101,19 +109,17 @@ function glotstat_enqueue_script() {
 	}
 
 	$nonce   = wp_create_nonce( 'glotstat_nonce' );
-	$strings = array(
+	$strings = [
 		'checking'    => __( 'Checking translation…', 'glotstat' ),
-		/* translators: %1$s: locale code, %2$d: translation percent, %3$d: translated string count, %4$d: total string count. */
-		'label'       => __( '%1$s: %2$d% (%3$d/%4$d)', 'glotstat' ),
-		'unavailable' => __( 'Translation stats unavailable', 'glotstat' ),
-		'error'       => __( 'Failed to load translation', 'glotstat' ),
+		'unavailable' => __( 'Translation stats unavailable.', 'glotstat' ),
+		'error'       => __( 'Failed to load translation.', 'glotstat' ),
 		/* translators: %d: waiting string count. */
 		'waiting'     => __( '%d waiting', 'glotstat' ),
 		/* translators: %d: fuzzy string count. */
 		'fuzzy'       => __( '%d fuzzy', 'glotstat' ),
 		/* translators: %d: warning count. */
 		'warnings'    => __( '%d warnings', 'glotstat' ),
-	);
+	];
 	?>
 	<script type="text/javascript">
 	jQuery( document ).ready( function ( $ ) {
@@ -141,11 +147,7 @@ function glotstat_enqueue_script() {
 					if ( response.success && response.data.percent !== 'N/A' ) {
 						var percent = parseInt( response.data.percent, 10 );
 						var color   = percent >= 90 ? '#46b450' : ( percent >= 50 ? '#ffb900' : '#dc3232' );
-						var label   = glotstatStrings.label
-							.replace( '%1$s', response.data.locale )
-							.replace( '%2$d', percent )
-							.replace( '%3$d', response.data.current )
-							.replace( '%4$d', response.data.total );
+						var label   = response.data.locale + ': ' + percent + '% (' + response.data.current + '/' + response.data.total + ')';
 						var labelHtml = response.data.url ?
 							'<a href="' + response.data.url + '" target="_blank" rel="noopener noreferrer">' + label + '</a>' :
 							label;
