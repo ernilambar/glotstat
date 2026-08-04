@@ -1,3 +1,10 @@
 {
-	"files": [ "build/**/*", "languages/**/*", "glotstat.php", "readme.txt", "!**/*.bak" ]
+	"files": [
+		"build/**/*",
+		"languages/**/*",
+		"composer.json",
+		"glotstat.php",
+		"readme.txt",
+		"!**/*.bak"
+	]
 }
