@@ -1,34 +1,44 @@
 <?php
 /**
- * Plugin Name: Language Stats
+ * Plugin Name: GlotStat
  * Description: Shows plugin translation completion percentage on the Add Plugins screen.
+ * Requires at least: 6.4
+ * Requires PHP: 7.4
  * Version: 1.0.0
- * Text Domain: langstats
+ * Author: Nilambar Sharma
+ * Author URI: https://nilambar.net
+ * License: GPL-2.0-or-later
+ * License URI: https://spdx.org/licenses/GPL-2.0-or-later.html
+ * Text Domain: glotstat
+ *
+ * @package GlotStat
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_action( 'wp_ajax_langstats_get_translation_status', 'langstats_ajax_get_translation_status' );
+define( 'GLOTSTAT_VERSION', '1.0.0' );
+
+add_action( 'wp_ajax_glotstat_get_translation_status', 'glotstat_ajax_get_translation_status' );
 /**
  * AJAX handler that fetches (and caches) the translation percentage for a plugin.
  */
-function langstats_ajax_get_translation_status() {
-	check_ajax_referer( 'langstats_nonce', 'nonce' );
+function glotstat_ajax_get_translation_status() {
+	check_ajax_referer( 'glotstat_nonce', 'nonce' );
 
 	if ( ! current_user_can( 'install_plugins' ) ) {
-		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'langstats' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'glotstat' ) ) );
 	}
 
 	$slug   = isset( $_POST['slug'] ) ? sanitize_key( wp_unslash( $_POST['slug'] ) ) : '';
 	$locale = get_user_locale();
 
 	if ( empty( $slug ) || 'en_US' === $locale ) {
-		wp_send_json_error( array( 'message' => __( 'Invalid request', 'langstats' ) ) );
+		wp_send_json_error( array( 'message' => __( 'Invalid request', 'glotstat' ) ) );
 	}
 
-	$transient_key = 'langstats_' . md5( $slug . '_' . $locale );
+	$transient_key = 'glotstat_' . GLOTSTAT_VERSION . '_' . md5( $slug . '_' . $locale );
 	$status        = get_transient( $transient_key );
 
 	if ( ! is_array( $status ) ) {
@@ -81,36 +91,36 @@ function langstats_ajax_get_translation_status() {
 	);
 }
 
-add_action( 'admin_footer-plugin-install.php', 'langstats_enqueue_script' );
+add_action( 'admin_footer-plugin-install.php', 'glotstat_enqueue_script' );
 /**
  * Print the script that fetches and renders translation status on plugin cards.
  */
-function langstats_enqueue_script() {
+function glotstat_enqueue_script() {
 	if ( 'en_US' === get_user_locale() ) {
 		return;
 	}
 
-	$nonce   = wp_create_nonce( 'langstats_nonce' );
+	$nonce   = wp_create_nonce( 'glotstat_nonce' );
 	$strings = array(
-		'checking'    => __( 'Checking translation…', 'langstats' ),
+		'checking'    => __( 'Checking translation…', 'glotstat' ),
 		/* translators: %1$s: locale code, %2$d: translation percent, %3$d: translated string count, %4$d: total string count. */
-		'label'       => __( '%1$s: %2$d% (%3$d/%4$d)', 'langstats' ),
-		'unavailable' => __( 'Translation stats unavailable', 'langstats' ),
-		'error'       => __( 'Failed to load translation', 'langstats' ),
+		'label'       => __( '%1$s: %2$d% (%3$d/%4$d)', 'glotstat' ),
+		'unavailable' => __( 'Translation stats unavailable', 'glotstat' ),
+		'error'       => __( 'Failed to load translation', 'glotstat' ),
 		/* translators: %d: waiting string count. */
-		'waiting'     => __( '%d waiting', 'langstats' ),
+		'waiting'     => __( '%d waiting', 'glotstat' ),
 		/* translators: %d: fuzzy string count. */
-		'fuzzy'       => __( '%d fuzzy', 'langstats' ),
+		'fuzzy'       => __( '%d fuzzy', 'glotstat' ),
 		/* translators: %d: warning count. */
-		'warnings'    => __( '%d warnings', 'langstats' ),
+		'warnings'    => __( '%d warnings', 'glotstat' ),
 	);
 	?>
 	<script type="text/javascript">
 	jQuery( document ).ready( function ( $ ) {
-		var langstatsNonce   = <?php echo wp_json_encode( $nonce ); ?>;
-		var langstatsStrings = <?php echo wp_json_encode( $strings ); ?>;
+		var glotstatNonce   = <?php echo wp_json_encode( $nonce ); ?>;
+		var glotstatStrings = <?php echo wp_json_encode( $strings ); ?>;
 
-		function langstatsFetchStatus( container ) {
+		function glotstatFetchStatus( container ) {
 			var $container = $( container );
 			var slug = $container.data( 'slug' );
 
@@ -123,15 +133,15 @@ function langstats_enqueue_script() {
 				url: ajaxurl,
 				type: 'POST',
 				data: {
-					action: 'langstats_get_translation_status',
+					action: 'glotstat_get_translation_status',
 					slug: slug,
-					nonce: langstatsNonce
+					nonce: glotstatNonce
 				},
 				success: function ( response ) {
 					if ( response.success && response.data.percent !== 'N/A' ) {
 						var percent = parseInt( response.data.percent, 10 );
 						var color   = percent >= 90 ? '#46b450' : ( percent >= 50 ? '#ffb900' : '#dc3232' );
-						var label   = langstatsStrings.label
+						var label   = glotstatStrings.label
 							.replace( '%1$s', response.data.locale )
 							.replace( '%2$d', percent )
 							.replace( '%3$d', response.data.current )
@@ -143,13 +153,13 @@ function langstats_enqueue_script() {
 
 						var extras = [];
 						if ( response.data.waiting > 0 ) {
-							extras.push( langstatsStrings.waiting.replace( '%d', response.data.waiting ) );
+							extras.push( glotstatStrings.waiting.replace( '%d', response.data.waiting ) );
 						}
 						if ( response.data.fuzzy > 0 ) {
-							extras.push( langstatsStrings.fuzzy.replace( '%d', response.data.fuzzy ) );
+							extras.push( glotstatStrings.fuzzy.replace( '%d', response.data.fuzzy ) );
 						}
 						if ( response.data.warnings > 0 ) {
-							extras.push( langstatsStrings.warnings.replace( '%d', response.data.warnings ) );
+							extras.push( glotstatStrings.warnings.replace( '%d', response.data.warnings ) );
 						}
 						var extrasHtml = extras.length ?
 							' <span style="color:#8c8f94;">(' + extras.join( ', ' ) + ')</span>' :
@@ -162,28 +172,28 @@ function langstats_enqueue_script() {
 							'</div>'
 						);
 					} else {
-						$container.html( '<span style="color:#8c8f94; font-size:11px;">' + langstatsStrings.unavailable + '</span>' );
+						$container.html( '<span style="color:#8c8f94; font-size:11px;">' + glotstatStrings.unavailable + '</span>' );
 					}
 				},
 				error: function () {
-					$container.html( '<span style="color:#dc3232; font-size:11px;">' + langstatsStrings.error + '</span>' );
+					$container.html( '<span style="color:#dc3232; font-size:11px;">' + glotstatStrings.error + '</span>' );
 				}
 			} );
 		}
 
-		var langstatsObserver = new IntersectionObserver( function ( entries, observer ) {
+		var glotstatObserver = new IntersectionObserver( function ( entries, observer ) {
 			entries.forEach( function ( entry ) {
 				if ( entry.isIntersecting ) {
-					langstatsFetchStatus( entry.target );
+					glotstatFetchStatus( entry.target );
 					observer.unobserve( entry.target );
 				}
 			} );
 		}, { rootMargin: '0px 0px 50px 0px' } );
 
-		function langstatsCreatePlaceholders() {
-			$( '.plugin-card' ).not( '.langstats-processed' ).each( function () {
+		function glotstatCreatePlaceholders() {
+			$( '.plugin-card' ).not( '.glotstat-processed' ).each( function () {
 				var $card = $( this );
-				$card.addClass( 'langstats-processed' );
+				$card.addClass( 'glotstat-processed' );
 
 				var slug = '';
 				var classes = ( $card.attr( 'class' ) || '' ).split( /\s+/ );
@@ -200,7 +210,7 @@ function langstats_enqueue_script() {
 
 				var $placeholder = $(
 					'<div class="plugin-translation-status" data-slug="' + slug + '" style="margin:0 0 10px; font-size:12px; min-height:20px;">' +
-						'<span class="status-label" style="color:#646970;">' + langstatsStrings.checking + '</span>' +
+						'<span class="status-label" style="color:#646970;">' + glotstatStrings.checking + '</span>' +
 					'</div>'
 				);
 
@@ -213,24 +223,24 @@ function langstats_enqueue_script() {
 			} );
 		}
 
-		function langstatsObservePlaceholders() {
-			langstatsCreatePlaceholders();
+		function glotstatObservePlaceholders() {
+			glotstatCreatePlaceholders();
 
 			$( '.plugin-translation-status:not(.is-observed)' ).each( function () {
 				$( this ).addClass( 'is-observed' );
-				langstatsObserver.observe( this );
+				glotstatObserver.observe( this );
 			} );
 		}
 
-		langstatsObservePlaceholders();
+		glotstatObservePlaceholders();
 
-		var langstatsDomObserver = new MutationObserver( function () {
-			langstatsObservePlaceholders();
+		var glotstatDomObserver = new MutationObserver( function () {
+			glotstatObservePlaceholders();
 		} );
 
-		var langstatsTargetNode = document.getElementById( 'the-list' );
-		if ( langstatsTargetNode ) {
-			langstatsDomObserver.observe( langstatsTargetNode, { childList: true, subtree: true } );
+		var glotstatTargetNode = document.getElementById( 'the-list' );
+		if ( glotstatTargetNode ) {
+			glotstatDomObserver.observe( glotstatTargetNode, { childList: true, subtree: true } );
 		}
 	} );
 	</script>
