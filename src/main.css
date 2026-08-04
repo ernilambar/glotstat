@@ -1,0 +1,56 @@
+.glotstat-status {
+	margin: 0 0 10px;
+	font-size: 12px;
+	min-height: 20px;
+}
+
+.glotstat-status-label {
+	color: #646970;
+}
+
+.glotstat-icon {
+	font-size: 14px;
+	width: 14px;
+	height: 14px;
+	line-height: 14px;
+	vertical-align: text-bottom;
+	margin-right: 4px;
+}
+
+.glotstat-extras {
+	color: #8c8f94;
+}
+
+.glotstat-progress {
+	background: #e0e0e0;
+	height: 5px;
+	border-radius: 3px;
+	overflow: hidden;
+	margin-top: 3px;
+}
+
+.glotstat-progress-bar {
+	height: 100%;
+}
+
+.glotstat-progress-bar.is-high {
+	background: #46b450;
+}
+
+.glotstat-progress-bar.is-medium {
+	background: #ffb900;
+}
+
+.glotstat-progress-bar.is-low {
+	background: #dc3232;
+}
+
+.glotstat-unavailable {
+	color: #8c8f94;
+	font-size: 11px;
+}
+
+.glotstat-error {
+	color: #dc3232;
+	font-size: 11px;
+}

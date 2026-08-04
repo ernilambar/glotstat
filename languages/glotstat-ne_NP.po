@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-04T04:30:31+00:00\n"
+"PO-Revision-Date: 2026-08-04T05:27:53+00:00\n"
 "Language: ne_NP\n"
 "X-Generator: WP-CLI 2.13.0-alpha\n"
 "X-Domain: glotstat\n"
@@ -38,40 +38,40 @@ msgstr "निलाम्वर शर्मा"
 msgid "https://nilambar.net"
 msgstr "https://nilambar.net"
 
-#: glotstat.php:36
+#: glotstat.php:37
 msgid "Sorry, you are not allowed to install plugins on this site."
 msgstr "माफ गर्नुहोस्, तपाईँलाई यो साइटमा प्लगिनहरू स्थापना गर्न अनुमति छैन।"
 
-#: glotstat.php:43
+#: glotstat.php:44
 msgid "Invalid request."
 msgstr "अमान्य अनुरोध।"
 
-#: glotstat.php:113
+#: glotstat.php:126
 msgid "Checking translation…"
 msgstr "अनुवाद परीक्षण गर्दै…"
 
-#: glotstat.php:114
+#: glotstat.php:127
 msgid "Translation stats unavailable."
 msgstr "अनुवाद तथ्याङ्कहरू उपलब्ध छैनन्।"
 
-#: glotstat.php:115
+#: glotstat.php:128
 msgid "Failed to load translation."
 msgstr "अनुवाद लोड गर्न असफल भयो।"
 
 #. translators: %d: waiting string count.
-#: glotstat.php:117
+#: glotstat.php:130
 #, php-format
 msgid "%d waiting"
 msgstr "%d प्रतीक्षा गर्दै"
 
 #. translators: %d: fuzzy string count.
-#: glotstat.php:119
+#: glotstat.php:132
 #, php-format
 msgid "%d fuzzy"
 msgstr "%d फजी"
 
 #. translators: %d: warning count.
-#: glotstat.php:121
+#: glotstat.php:134
 #, php-format
 msgid "%d warnings"
 msgstr "%d चेतावनीहरू"
