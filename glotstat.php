@@ -81,7 +81,7 @@ class Glotstat {
 
 				if ( ! empty( $data['translation_sets'] ) ) {
 					foreach ( $data['translation_sets'] as $set ) {
-						if ( 'default' === $set['slug'] && $locale === $set['wp_locale'] ) {
+						if ( 'default' === $set['slug'] && ( $set['wp_locale'] ?? '' ) === $locale ) {
 							$gp_locale          = preg_replace( '/[^a-z0-9-]/', '', $set['locale'] );
 							$status['percent']  = (int) $set['percent_translated'];
 							$status['url']      = esc_url_raw( sprintf( 'https://translate.wordpress.org/projects/wp-plugins/%s/dev/%s/default/', $slug, $gp_locale ) );
