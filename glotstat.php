@@ -5,7 +5,7 @@
  * Description: Displays plugin translation stats.
  * Requires at least: 6.9
  * Requires PHP: 7.4
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Nilambar Sharma
  * Author URI: https://nilambar.net
  * License: GPL-2.0-or-later
@@ -16,12 +16,17 @@
  * @package GlotStat
  */
 
+use Nilambar\Gitvise\Updater;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GLOTSTAT_VERSION', '1.0.0' );
+define( 'GLOTSTAT_VERSION', '1.0.1' );
+define( 'GLOTSTAT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GLOTSTAT_URL', plugin_dir_url( __FILE__ ) );
+
+require_once GLOTSTAT_DIR . 'vendor/autoload.php';
 
 /**
  * Main plugin class.
@@ -31,7 +36,7 @@ define( 'GLOTSTAT_URL', plugin_dir_url( __FILE__ ) );
 class Glotstat {
 
 	/**
-	 * Hook into WordPress.
+	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
@@ -49,7 +54,7 @@ class Glotstat {
 		check_ajax_referer( 'glotstat_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'install_plugins' ) ) {
-			wp_send_json_error( [ 'message' => __( 'Sorry, you are not allowed to install plugins on this site.', 'glotstat' ) ] );
+			wp_send_json_error( [ 'message' => __( 'Insufficient permissions.', 'glotstat' ) ] );
 		}
 
 		$slug   = isset( $_POST['slug'] ) ? sanitize_key( wp_unslash( $_POST['slug'] ) ) : '';
@@ -82,7 +87,7 @@ class Glotstat {
 				if ( ! empty( $data['translation_sets'] ) ) {
 					foreach ( $data['translation_sets'] as $set ) {
 						if ( 'default' === $set['slug'] && ( $set['wp_locale'] ?? '' ) === $locale ) {
-							$gp_locale          = preg_replace( '/[^a-z0-9-]/', '', $set['locale'] );
+							$gp_locale          = preg_replace( '/[^a-z0-9-]/', '', $set['wp_locale'] ?? '' );
 							$status['percent']  = (int) $set['percent_translated'];
 							$status['url']      = esc_url_raw( sprintf( 'https://translate.wordpress.org/projects/wp-plugins/%s/dev/%s/default/', $slug, $gp_locale ) );
 							$status['current']  = (int) $set['current_count'];
@@ -153,3 +158,6 @@ class Glotstat {
 }
 
 new Glotstat();
+
+// Initialize updater.
+( new Updater( 'ernilambar/glotstat', __FILE__ ) )->init();

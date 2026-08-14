@@ -1,6 +1,6 @@
 {
 	"name": "glotstat",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Displays plugin translation stats.",
 	"keywords": [
 		"wordpress",
@@ -19,19 +19,20 @@
 	"main": "glotstat.php",
 	"scripts": {
 		"build": "vite build",
-		"predeploy": "rimraf build deploy && pnpm run build",
+		"predeploy": "rimraf build deploy vendor && pnpm run build && pnpm run vendor",
 		"deploy": "packtor",
 		"format": "prettier \"**/*.{cjs,css,js,jsx,json,mjs}\" --write --log-level warn",
+		"vendor": "composer install --no-dev --no-scripts -o",
 		"version": "easy-replace-in-files"
 	},
 	"browserslist": "> 2%, last 2 versions, not dead",
 	"devDependencies": {
-		"@wordpress/prettier-config": "^4.52.0",
+		"@wordpress/prettier-config": "^4.53.0",
 		"easy-replace-in-files": "^2.0.0",
 		"packtor": "^2.0.0",
 		"prettier": "npm:wp-prettier@^3.0.3",
 		"rimraf": "^6.1.3",
-		"vite": "^8.2.0"
+		"vite": "^8.2.1"
 	},
 	"packageManager": "pnpm@11.10.0",
 	"engines": {

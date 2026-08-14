@@ -1,10 +1,10 @@
 === GlotStat ===
 
 Contributors: nilambar
-Tags: translation, i18n, l10n, plugin install, glotpress
+Tags: translation, i18n, l10n, stats, localization
 Requires at least: 6.9
-Tested up to: 7.0
-Stable tag: 1.0.0
+Tested up to: 7.1
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -50,7 +50,10 @@ Data is fetched from the [WordPress.org translation API](https://translate.wordp
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.1 - 2026-08-14 =
+* Fixed: fix PHP warning
+
+= 1.0.0 - 2026-08-04 =
 * Initial release
 
 == Upgrade Notice ==
