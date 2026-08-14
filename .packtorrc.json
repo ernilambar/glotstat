@@ -2,6 +2,7 @@
 	"files": [
 		"build/**/*",
 		"languages/**/*",
+		"vendor/**/*",
 		"composer.json",
 		"glotstat.php",
 		"readme.txt",
