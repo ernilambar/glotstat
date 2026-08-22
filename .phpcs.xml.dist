@@ -33,6 +33,9 @@
 
 	<rule ref="NilambarCodingStandard"/>
 
+	<!-- Loads the PHP Compatibility ruleset. -->
+	<rule ref="PHPCompatibility" />
+
 	<rule ref="WordPress-Core">
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
 		<exclude name="WordPress.PHP.DevelopmentFunctions"/>
