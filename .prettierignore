@@ -1,5 +1,15 @@
+*.lock
+*.min.css
+*.min.js
+*.yaml
+*.yml
+.*/
 build
+bun.lock
+bun.lockb
 composer.json
 deploy
+dist
 node_modules
+package-lock.json
 vendor

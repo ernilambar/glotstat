@@ -26,7 +26,11 @@ document.addEventListener( 'DOMContentLoaded', function () {
 				if ( response.success && 'N/A' !== response.data.percent ) {
 					const percent = parseInt( response.data.percent, 10 );
 					const colorClass =
-						percent >= 90 ? 'is-high' : percent >= 50 ? 'is-medium' : 'is-low';
+						percent >= 90
+							? 'is-high'
+							: percent >= 50
+								? 'is-medium'
+								: 'is-low';
 					const label =
 						response.data.locale +
 						': ' +
@@ -38,10 +42,10 @@ document.addEventListener( 'DOMContentLoaded', function () {
 						')';
 					const labelHtml = response.data.url
 						? '<a href="' +
-						  response.data.url +
-						  '" target="_blank" rel="noopener noreferrer">' +
-						  label +
-						  '</a>'
+							response.data.url +
+							'" target="_blank" rel="noopener noreferrer">' +
+							label +
+							'</a>'
 						: label;
 					const iconHtml =
 						'<span class="dashicons dashicons-translation glotstat-icon"></span>';
@@ -49,19 +53,32 @@ document.addEventListener( 'DOMContentLoaded', function () {
 					const extras = [];
 					if ( response.data.waiting > 0 ) {
 						extras.push(
-							glotstatData.i18n.waiting.replace( '%d', response.data.waiting )
+							glotstatData.i18n.waiting.replace(
+								'%d',
+								response.data.waiting
+							)
 						);
 					}
 					if ( response.data.fuzzy > 0 ) {
-						extras.push( glotstatData.i18n.fuzzy.replace( '%d', response.data.fuzzy ) );
+						extras.push(
+							glotstatData.i18n.fuzzy.replace(
+								'%d',
+								response.data.fuzzy
+							)
+						);
 					}
 					if ( response.data.warnings > 0 ) {
 						extras.push(
-							glotstatData.i18n.warnings.replace( '%d', response.data.warnings )
+							glotstatData.i18n.warnings.replace(
+								'%d',
+								response.data.warnings
+							)
 						);
 					}
 					const extrasHtml = extras.length
-						? ' <span class="glotstat-extras">(' + extras.join( ', ' ) + ')</span>'
+						? ' <span class="glotstat-extras">(' +
+							extras.join( ', ' ) +
+							')</span>'
 						: '';
 
 					container.innerHTML =
@@ -86,7 +103,9 @@ document.addEventListener( 'DOMContentLoaded', function () {
 			} )
 			.catch( function () {
 				container.innerHTML =
-					'<span class="glotstat-error">' + glotstatData.i18n.error + '</span>';
+					'<span class="glotstat-error">' +
+					glotstatData.i18n.error +
+					'</span>';
 			} );
 	}
 
@@ -156,6 +175,9 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
 	const glotstatTargetNode = document.getElementById( 'the-list' );
 	if ( glotstatTargetNode ) {
-		glotstatDomObserver.observe( glotstatTargetNode, { childList: true, subtree: true } );
+		glotstatDomObserver.observe( glotstatTargetNode, {
+			childList: true,
+			subtree: true,
+		} );
 	}
 } );
