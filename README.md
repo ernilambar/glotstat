@@ -22,6 +22,4 @@ Download the [latest release zip](https://github.com/ernilambar/glotstat/release
 
 ## License
 
-Copyright (c) 2026 Nilambar Sharma
-
-[GPLv2 or later](https://spdx.org/licenses/GPL-2.0-or-later.html)
+[GPLv2 or later](LICENSE) © [Nilambar Sharma](https://www.nilambar.net)
