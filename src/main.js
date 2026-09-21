@@ -40,15 +40,25 @@ document.addEventListener( 'DOMContentLoaded', function () {
 						'/' +
 						response.data.total +
 						')';
-					const labelHtml = response.data.url
-						? '<a href="' +
-							response.data.url +
-							'" target="_blank" rel="noopener noreferrer">' +
-							label +
-							'</a>'
-						: label;
-					const iconHtml =
-						'<span class="dashicons dashicons-translation glotstat-icon"></span>';
+					const icon = document.createElement( 'span' );
+					icon.className =
+						'dashicons dashicons-translation glotstat-icon';
+
+					const strong = document.createElement( 'strong' );
+					strong.append( icon );
+
+					if ( response.data.url ) {
+						const link = document.createElement( 'a' );
+						link.href = response.data.url;
+						link.target = '_blank';
+						link.rel = 'noopener noreferrer';
+						link.textContent = label;
+						strong.append( link );
+					} else {
+						strong.append( label );
+					}
+
+					container.replaceChildren( strong );
 
 					const extras = [];
 					if ( response.data.waiting > 0 ) {
@@ -75,37 +85,34 @@ document.addEventListener( 'DOMContentLoaded', function () {
 							)
 						);
 					}
-					const extrasHtml = extras.length
-						? ' <span class="glotstat-extras">(' +
-							extras.join( ', ' ) +
-							')</span>'
-						: '';
+					if ( extras.length ) {
+						const extrasEl = document.createElement( 'span' );
+						extrasEl.className = 'glotstat-extras';
+						extrasEl.textContent = '(' + extras.join( ', ' ) + ')';
+						container.append( ' ', extrasEl );
+					}
 
-					container.innerHTML =
-						'<strong>' +
-						iconHtml +
-						labelHtml +
-						'</strong>' +
-						extrasHtml +
-						'<div class="glotstat-progress">' +
-						'<div class="glotstat-progress-bar ' +
-						colorClass +
-						'" style="width:' +
-						percent +
-						'%"></div>' +
-						'</div>';
+					const progress = document.createElement( 'div' );
+					progress.className = 'glotstat-progress';
+
+					const bar = document.createElement( 'div' );
+					bar.className = 'glotstat-progress-bar ' + colorClass;
+					bar.style.width = percent + '%';
+					progress.append( bar );
+
+					container.append( progress );
 				} else {
-					container.innerHTML =
-						'<span class="glotstat-unavailable">' +
-						glotstatData.i18n.unavailable +
-						'</span>';
+					const unavailable = document.createElement( 'span' );
+					unavailable.className = 'glotstat-unavailable';
+					unavailable.textContent = glotstatData.i18n.unavailable;
+					container.replaceChildren( unavailable );
 				}
 			} )
 			.catch( function () {
-				container.innerHTML =
-					'<span class="glotstat-error">' +
-					glotstatData.i18n.error +
-					'</span>';
+				const error = document.createElement( 'span' );
+				error.className = 'glotstat-error';
+				error.textContent = glotstatData.i18n.error;
+				container.replaceChildren( error );
 			} );
 	}
 
@@ -142,10 +149,11 @@ document.addEventListener( 'DOMContentLoaded', function () {
 			const placeholder = document.createElement( 'div' );
 			placeholder.className = 'plugin-translation-status glotstat-status';
 			placeholder.dataset.slug = slug;
-			placeholder.innerHTML =
-				'<span class="status-label glotstat-status-label">' +
-				glotstatData.i18n.checking +
-				'</span>';
+
+			const statusLabel = document.createElement( 'span' );
+			statusLabel.className = 'status-label glotstat-status-label';
+			statusLabel.textContent = glotstatData.i18n.checking;
+			placeholder.append( statusLabel );
 
 			const bottom = card.querySelector( '.plugin-card-bottom' );
 			if ( bottom ) {
