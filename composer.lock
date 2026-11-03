@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "591187f391a754308ceed2e2817e50cf",
+    "content-hash": "b5ecf3b946814295039ddec4d9e7a313",
     "packages": [
         {
             "name": "ernilambar/gitvise",
@@ -45,7 +45,8 @@
                 "issues": "https://github.com/ernilambar/gitvise/issues",
                 "source": "https://github.com/ernilambar/gitvise/tree/1.0.6"
             },
-            "time": "2026-08-10T05:06:32+00:00"
+            "time": "2026-08-10T05:06:32+00:00",
+            "published-time": "2026-08-10T05:07:06+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -101,22 +102,23 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-16T11:41:01+00:00"
+            "time": "2026-02-16T11:41:01+00:00",
+            "published-time": "2026-02-16T12:37:29+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "composer/semver",
-            "version": "3.5.1",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "528948210cc46f967a4b98e83b19e76f2b504993"
+                "reference": "d92543b7ede9c4ec6b59853cefb061e39866d2cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/528948210cc46f967a4b98e83b19e76f2b504993",
-                "reference": "528948210cc46f967a4b98e83b19e76f2b504993",
+                "url": "https://api.github.com/repos/composer/semver/zipball/d92543b7ede9c4ec6b59853cefb061e39866d2cf",
+                "reference": "d92543b7ede9c4ec6b59853cefb061e39866d2cf",
                 "shasum": ""
             },
             "require": {
@@ -168,7 +170,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.5.1"
+                "source": "https://github.com/composer/semver/tree/3.6.0"
             },
             "funding": [
                 {
@@ -180,7 +182,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-05T13:12:12+00:00"
+            "time": "2026-10-29T09:13:34+00:00",
+            "published-time": "2026-10-29T09:14:11+00:00"
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
@@ -276,7 +279,8 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2026-05-06T08:26:05+00:00"
+            "time": "2026-05-06T08:26:05+00:00",
+            "published-time": "2026-05-06T12:56:03+00:00"
         },
         {
             "name": "eftec/bladeone",
@@ -334,7 +338,8 @@
                 "issues": "https://github.com/EFTEC/BladeOne/issues",
                 "source": "https://github.com/EFTEC/BladeOne/tree/3.52"
             },
-            "time": "2021-04-17T13:49:01+00:00"
+            "time": "2021-04-17T13:49:01+00:00",
+            "published-time": "2021-04-17T13:49:42+00:00"
         },
         {
             "name": "ernilambar/coding-standard",
@@ -386,7 +391,8 @@
                 "issues": "https://github.com/ernilambar/coding-standard/issues",
                 "source": "https://github.com/ernilambar/coding-standard/tree/2.0.1"
             },
-            "time": "2026-08-13T12:06:25+00:00"
+            "time": "2026-08-13T12:06:25+00:00",
+            "published-time": "2026-08-13T12:07:04+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -467,7 +473,8 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2024-05-18T10:25:07+00:00"
+            "time": "2024-05-18T10:25:07+00:00",
+            "published-time": "2024-05-18T10:26:21+00:00"
         },
         {
             "name": "gettext/languages",
@@ -542,7 +549,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-23T14:05:50+00:00"
+            "time": "2026-02-23T14:05:50+00:00",
+            "published-time": "2026-02-23T14:07:59+00:00"
         },
         {
             "name": "mck89/peast",
@@ -592,7 +600,8 @@
                 "issues": "https://github.com/mck89/peast/issues",
                 "source": "https://github.com/mck89/peast/tree/v1.18.1"
             },
-            "time": "2026-09-15T06:27:15+00:00"
+            "time": "2026-09-15T06:27:15+00:00",
+            "published-time": "2026-09-15T06:27:47+00:00"
         },
         {
             "name": "mustache/mustache",
@@ -645,7 +654,8 @@
                 "issues": "https://github.com/bobthecow/mustache.php/issues",
                 "source": "https://github.com/bobthecow/mustache.php/tree/v3.2.0"
             },
-            "time": "2026-05-10T04:13:08+00:00"
+            "time": "2026-05-10T04:13:08+00:00",
+            "published-time": "2026-05-10T04:16:00+00:00"
         },
         {
             "name": "php-parallel-lint/php-parallel-lint",
@@ -653,12 +663,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-parallel-lint/PHP-Parallel-Lint.git",
-                "reference": "f8cb90a"
+                "reference": "186aee3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Parallel-Lint/zipball/f8cb90a",
-                "reference": "f8cb90a",
+                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Parallel-Lint/zipball/186aee3",
+                "reference": "186aee3",
                 "shasum": ""
             },
             "require": {
@@ -711,7 +721,8 @@
                 "issues": "https://github.com/php-parallel-lint/PHP-Parallel-Lint/issues",
                 "source": "https://github.com/php-parallel-lint/PHP-Parallel-Lint/tree/develop"
             },
-            "time": "2026-06-22T01:06:31+00:00"
+            "time": "2026-10-25T22:03:36+00:00",
+            "published-time": "2026-10-25T22:03:40+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -801,7 +812,8 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-11-28T11:36:33+00:00"
+            "time": "2025-11-28T11:36:33+00:00",
+            "published-time": "2025-11-28T11:41:33+00:00"
         },
         {
             "name": "phpcompatibility/phpcompatibility-paragonie",
@@ -872,7 +884,8 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-11-29T13:09:49+00:00"
+            "time": "2025-11-29T13:09:49+00:00",
+            "published-time": "2025-11-29T13:22:17+00:00"
         },
         {
             "name": "phpcompatibility/phpcompatibility-wp",
@@ -939,7 +952,8 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-12-16T13:35:20+00:00"
+            "time": "2025-12-16T13:35:20+00:00",
+            "published-time": "2025-12-16T13:47:29+00:00"
         },
         {
             "name": "phpcsstandards/phpcsextra",
@@ -1021,7 +1035,8 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2026-07-27T11:13:17+00:00"
+            "time": "2026-07-27T11:13:17+00:00",
+            "published-time": "2026-07-27T11:19:59+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -1114,7 +1129,8 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2026-07-27T10:28:41+00:00"
+            "time": "2026-07-27T10:28:41+00:00",
+            "published-time": "2026-07-27T10:36:31+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1193,20 +1209,21 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2026-08-06T00:17:32+00:00"
+            "time": "2026-08-06T00:17:32+00:00",
+            "published-time": "2026-08-06T01:05:02+00:00"
         },
         {
             "name": "wp-cli/i18n-command",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/i18n-command.git",
-                "reference": "08a69eb8a8ba3cf23449fe8a64a06aeb2dbd8949"
+                "reference": "5f6966b16993d42c481e36c2a1d7eea1170a1e90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/08a69eb8a8ba3cf23449fe8a64a06aeb2dbd8949",
-                "reference": "08a69eb8a8ba3cf23449fe8a64a06aeb2dbd8949",
+                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/5f6966b16993d42c481e36c2a1d7eea1170a1e90",
+                "reference": "5f6966b16993d42c481e36c2a1d7eea1170a1e90",
                 "shasum": ""
             },
             "require": {
@@ -1261,9 +1278,10 @@
             "homepage": "https://github.com/wp-cli/i18n-command",
             "support": {
                 "issues": "https://github.com/wp-cli/i18n-command/issues",
-                "source": "https://github.com/wp-cli/i18n-command/tree/v3.0.1"
+                "source": "https://github.com/wp-cli/i18n-command/tree/v3.0.2"
             },
-            "time": "2026-08-17T12:44:00+00:00"
+            "time": "2026-10-30T14:14:05+00:00",
+            "published-time": "2026-10-30T17:03:31+00:00"
         },
         {
             "name": "wp-cli/mustangostang-spyc",
@@ -1314,7 +1332,8 @@
             "support": {
                 "source": "https://github.com/wp-cli/spyc/tree/0.6.7"
             },
-            "time": "2026-10-06T08:59:48+00:00"
+            "time": "2026-10-06T08:59:48+00:00",
+            "published-time": "2026-10-06T09:00:14+00:00"
         },
         {
             "name": "wp-cli/php-cli-tools",
@@ -1377,7 +1396,8 @@
                 "issues": "https://github.com/wp-cli/php-cli-tools/issues",
                 "source": "https://github.com/wp-cli/php-cli-tools/tree/v0.13.2"
             },
-            "time": "2026-10-07T11:43:52+00:00"
+            "time": "2026-10-07T11:43:52+00:00",
+            "published-time": "2026-10-07T11:44:13+00:00"
         },
         {
             "name": "wp-cli/wp-cli",
@@ -1385,12 +1405,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "2278cf3f52518938de341d1902b9fd9eb718ffd9"
+                "reference": "aafc2a845cc8d9a6c2bd17bca9c81be10f376ae2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/2278cf3f52518938de341d1902b9fd9eb718ffd9",
-                "reference": "2278cf3f52518938de341d1902b9fd9eb718ffd9",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/aafc2a845cc8d9a6c2bd17bca9c81be10f376ae2",
+                "reference": "aafc2a845cc8d9a6c2bd17bca9c81be10f376ae2",
                 "shasum": ""
             },
             "require": {
@@ -1402,13 +1422,12 @@
             },
             "require-dev": {
                 "justinrainbow/json-schema": "^6.3",
-                "roave/security-advisories": "dev-latest",
                 "wp-cli/db-command": "^2 || ^3",
                 "wp-cli/entity-command": "^2 || ^3",
                 "wp-cli/extension-command": "^2 || ^3",
                 "wp-cli/language-command": "^2 || ^3",
                 "wp-cli/package-command": "^2 || ^3",
-                "wp-cli/wp-cli-tests": "^5"
+                "wp-cli/wp-cli-tests": "^5.4.2"
             },
             "suggest": {
                 "ext-curl": "For better performance when making HTTP requests",
@@ -1463,7 +1482,8 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2026-10-15T00:58:43+00:00"
+            "time": "2026-11-02T15:12:13+00:00",
+            "published-time": "2026-11-02T15:12:20+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
@@ -1529,7 +1549,8 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-07-27T11:53:23+00:00"
+            "time": "2026-07-27T11:53:23+00:00",
+            "published-time": "2026-07-27T11:55:52+00:00"
         }
     ],
     "aliases": [],
@@ -1546,5 +1567,5 @@
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

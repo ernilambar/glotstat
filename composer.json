@@ -16,7 +16,7 @@
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.2",
 		"ernilambar/coding-standard": "^2.0",
-		"php-parallel-lint/php-parallel-lint": "dev-develop#f8cb90a",
+		"php-parallel-lint/php-parallel-lint": "dev-develop#186aee3",
 		"phpcompatibility/phpcompatibility-wp": "^3.0",
 		"wp-cli/i18n-command": "^3.0",
 		"wp-cli/wp-cli": "^3.0",
