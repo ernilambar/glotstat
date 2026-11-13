@@ -41,8 +41,16 @@ document.addEventListener( 'DOMContentLoaded', function () {
 						response.data.total +
 						')';
 					const icon = document.createElement( 'span' );
-					icon.className =
-						'dashicons dashicons-translation glotstat-icon';
+					icon.className = 'glotstat-icon';
+
+					if ( glotstatData.icon ) {
+						icon.innerHTML = glotstatData.icon;
+					} else {
+						icon.classList.add(
+							'dashicons',
+							'dashicons-translation'
+						);
+					}
 
 					const strong = document.createElement( 'strong' );
 					strong.append( icon );

@@ -119,6 +119,28 @@ class Glotstat {
 	}
 
 	/**
+	 * Return the SVG markup for the translation icon.
+	 *
+	 * Uses the Icons API when available and falls back to an empty string on
+	 * older WordPress versions, where the Dashicon class is used instead.
+	 *
+	 * @since 1.0.2
+	 *
+	 * @return string Icon SVG markup, or an empty string if unavailable.
+	 */
+	private function get_icon_markup() {
+		if ( ! class_exists( 'WP_Icons_Registry' ) || ! function_exists( 'wp_get_icon' ) ) {
+			return '';
+		}
+
+		if ( ! WP_Icons_Registry::get_instance()->is_registered( 'core-admin/language' ) ) {
+			return '';
+		}
+
+		return wp_get_icon( 'core-admin/language', [ 'size' => 14 ] );
+	}
+
+	/**
 	 * Enqueue the script that fetches and renders translation status on plugin cards.
 	 *
 	 * @since 1.0.0
@@ -140,6 +162,7 @@ class Glotstat {
 		$data = [
 			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 			'nonce'   => wp_create_nonce( 'glotstat_nonce' ),
+			'icon'    => $this->get_icon_markup(),
 			'i18n'    => [
 				'checking'    => __( 'Checking translation…', 'glotstat' ),
 				'unavailable' => __( 'Translation stats unavailable.', 'glotstat' ),
